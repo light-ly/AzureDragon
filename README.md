@@ -12,7 +12,7 @@ pip install cocotb
 sudo apt install gtkwave
 ```
 
-## Simulation
+## Simulation(Don't support vcs now)
 
 1. clone this repo
 
@@ -39,7 +39,7 @@ Simulation log will output on terminal.
 you can also use other installed simulations tools, for example:
 
 ```
-dragon_mk SIM=vcs
+dragon_mk SIM=questa
 ```
 
 4. see waveform
