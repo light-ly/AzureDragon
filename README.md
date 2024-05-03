@@ -12,7 +12,7 @@ pip install cocotb
 sudo apt install gtkwave
 ```
 
-## Simulation(Don't support vcs now)
+## Prepare env
 
 1. clone this repo
 
@@ -26,7 +26,13 @@ git clone https://github.com/light-ly/AzureDragon.git
 cd AzureDragon && source azure_dragon.sh
 ```
 
-3. compile and run test
+## Simulation
+
+sim support **verilaor with cocotb** and **vcs**
+
+### verilator with cocotb
+
+1. compile and run test
 
 ```
 dragon_mk
@@ -34,16 +40,12 @@ dragon_mk
 dragon_mk WAVES=1
 ```
 
-Simulation log will output on terminal.
+Simulation log will output on terminal.If first time you dont use WAVES, you should clean and excute the command again.
 
-you can also use other installed simulations tools, for example:
-
-```
-dragon_mk SIM=questa
-```
-
-4. see waveform
+2. see waveform
 
 ```
 dragon_mk show_wave
 ```
+
+### vcs (TODO)
