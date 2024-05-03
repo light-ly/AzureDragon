@@ -37,7 +37,11 @@ COCOTB_RESULTS_FILE = $(SIM_BUILD)/results.xml
 include $(shell cocotb-config --makefiles)/Makefile.sim
 
 show_wave:
-	gtkwave $(DRAGON_HOME)/sim/test/dump.vcd >/dev/null 2>&1 &
+	gtkwave $(DRAGON_HOME)/sim/cocotb/test/dump.vcd >/dev/null 2>&1 &
+
+clean_all:
+	make clean
+	rm -rf $(DRAGON_HOME)/build
 
 .PHONY:
-	show_wave
+	show_wave clean_all
