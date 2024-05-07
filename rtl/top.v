@@ -1,32 +1,77 @@
 module top(
         input clk,
-        input rst,
-        input  [63:0] src1,
-        input  [63:0] src2,
-        output [63:0] out
+        input rst
     );
 
-    // outports wire
-    wire [63:0] 	sum;
-    wire [63:0] 	dout;
+    wire [63:0] 	pc;
+    wire [63:0] 	next_pc;
+    wire [63:0] 	inst;
+    wire [63:0] 	next_inst;
+    wire        	wen;
+    wire        	en_imm;
+    wire [63:0] 	imm;
+    wire [3:0]  	raddr1;
+    wire [3:0]  	raddr2;
+    wire [3:0]  	waddr;
+    wire [63:0] 	alu_result;
 
-    adder u_adder(
-            .src1 	( src1  ),
-            .src2 	( src2  ),
-            .sum  	( sum   )
-        );
+    PC u_PC(
+        .clk     	( clk      ),
+        .rst     	( rst      ),
+        .next_pc 	( next_pc  ),
+        .pc      	( pc       )
+    );
 
-    Reg #(
-            .DATA_WIDTH 	( 64 ),
-            .RESET_VAL  	( 0  )
-        ) u_Reg
-        (
-            .clk  	( clk   ),
-            .rst  	( rst   ),
-            .din  	( sum   ),
-            .dout 	( dout  )
-        );
+    InstFetch u_InstFetch(
+        .clk       	( clk        ),
+        .rst       	( rst        ),
+        .next_inst 	( next_inst  ),
+        .inst      	( inst       )
+    );
 
-    assign out = dout;
+    ram #(
+        .ADDR_WIDTH(5   ),
+        .DATA_WIDTH(64  ) 
+    ) u_ram (
+        .clk    ( clk         ),
+        .addr   ( pc          ),
+        .data   ( next_inst   )
+    );
+
+    Decode u_Decode(
+        .clk    	( clk     ),
+        .rst    	( rst     ),
+        .inst   	( inst    ),
+        .wen    	( wen     ),
+        .en_imm 	( en_imm  ),
+        .imm    	( imm     ),
+        .raddr1 	( raddr1  ),
+        .raddr2 	( raddr2  ),
+        .waddr  	( waddr   )
+    );
+
+    RegFile #(
+        .ADDR_WIDTH(5   ),
+        .DATA_WIDTH(64  )
+    ) u_reg (
+        .clk        ( clk           ),
+        .raddr1     ( raddr1        ),
+        .raddr2     ( raddr2        ),
+        .wdata      ( alu_result    ),
+        .waddr      ( waddr         ),
+        .wen        ( wen           ),
+        .rdata1     ( rdata1        ),
+        .rdata2     ( rdata2        )
+    );
+
+    Alu u_Alu(
+        .src1       	( rdata1      ),
+        .src2       	( rdata2      ),
+        .imm        	( imm         ),
+        .en_imm     	( en_imm      ),
+        .alu_result 	( alu_result  )
+    );
+
+    assign next_pc = pc + 4;
 
 endmodule //top
