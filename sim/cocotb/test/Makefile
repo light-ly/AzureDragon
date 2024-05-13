@@ -15,10 +15,10 @@ SIM ?= verilator
 TOP_LEVEL		?= top
 TOP_LEVEL_LANG  ?= verilog
 VERILOG_SOURCES ?= $(shell find $(DRAGON_HOME)/rtl -name "*.v" -or -name "*.sv")
-COMPILE_ARGS    ?=
-SIM_ARGS		?=
-EXTRA_ARGS		?=
-PLUS_ARGS		?=
+COMPILE_ARGS    +=
+SIM_ARGS		+=
+EXTRA_ARGS		+=
+PLUS_ARGS		+=
 ifeq ("$(SIM)","verilator")
 	ifeq ($(WAVES), 1)
 		EXTRA_ARGS += --trace --trace-structs
