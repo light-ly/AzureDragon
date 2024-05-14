@@ -1,13 +1,13 @@
-module RegFile #(ADDR_WIDTH = 1, DATA_WIDTH = 1) (
-    input  clk,
-    input  [ADDR_WIDTH-1:0] raddr1,
-    input  [ADDR_WIDTH-1:0] raddr2,
-    input  [DATA_WIDTH-1:0] wdata,
-    input  [ADDR_WIDTH-1:0] waddr,
-    input  wen,
-    output [DATA_WIDTH-1:0] rdata1,
-    output [DATA_WIDTH-1:0] rdata2
-);
+module RegFile #(parameter ADDR_WIDTH = 1, parameter DATA_WIDTH = 1) (
+        input  clk,
+        input  [ADDR_WIDTH-1:0] raddr1,
+        input  [ADDR_WIDTH-1:0] raddr2,
+        input  [DATA_WIDTH-1:0] wdata,
+        input  [ADDR_WIDTH-1:0] waddr,
+        input  wen,
+        output [DATA_WIDTH-1:0] rdata1,
+        output [DATA_WIDTH-1:0] rdata2
+    );
   
     reg [DATA_WIDTH-1:0] rdata1r;
     reg [DATA_WIDTH-1:0] rdata1r;
