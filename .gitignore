@@ -1,3 +1,4 @@
 .vscode/
 build/
 *.vcd
+.sv_cache/
