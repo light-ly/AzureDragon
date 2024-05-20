@@ -8,7 +8,7 @@ module top (
     logic [63:0] inst;
     logic [63:0] next_inst;
     logic        wen;
-    logic        en_imm;
+    logic        imm_sel;
     logic [63:0] imm;
     logic [ 3:0] raddr1;
     logic [ 3:0] raddr2;
@@ -39,15 +39,15 @@ module top (
     );
 
     decode u_Decode (
-        .clk   (clk),
-        .rst   (rst),
-        .inst  (inst),
-        .wen   (wen),
-        .en_imm(en_imm),
-        .imm   (imm),
-        .raddr1(raddr1),
-        .raddr2(raddr2),
-        .waddr (waddr)
+        .clk    (clk),
+        .rst    (rst),
+        .inst_i (inst),
+        .wen    (wen),
+        .imm_sel(imm_sel),
+        .imm    (imm),
+        .raddr1 (raddr1),
+        .raddr2 (raddr2),
+        .waddr  (waddr)
     );
 
     regfile #(
@@ -68,7 +68,7 @@ module top (
         .src1      (rdata1),
         .src2      (rdata2),
         .imm       (imm),
-        .en_imm    (en_imm),
+        .imm_sel   (imm_sel),
         .alu_result(alu_result)
     );
 
